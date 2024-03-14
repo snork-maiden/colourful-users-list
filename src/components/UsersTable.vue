@@ -1,5 +1,15 @@
 <script setup lang="ts">
+import { getUsersList } from '@/api/api'
+import type { User } from '@/interfaces'
+import { ref, onMounted, type Ref } from 'vue'
+import UsersTableRow from './UsersTableRow.vue'
 
+let usersList: Ref<null | User[]> = ref(null)
+
+onMounted(async () => {
+  usersList.value = (await getUsersList()) || null
+  console.log(usersList.value)
+})
 </script>
 
 <template>
@@ -11,30 +21,12 @@
       <th class="header">Role</th>
       <th class="header">Is blocked</th>
     </tr>
+    <template v-if="usersList">
+      <UsersTableRow v-for="user of usersList" :key="user.id" :user="user" />
+    </template>
   </table>
 </template>
 
 <style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  position: relative;
-  top: -10px;
-}
 
-h3 {
-  font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
-}
 </style>
