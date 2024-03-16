@@ -1,15 +1,10 @@
 <script setup lang="ts">
-import { getUsersList } from '@/api/api'
-import type { User } from '@/interfaces'
-import { ref, onMounted, type Ref } from 'vue'
+import type { FilterParams, User } from '@/interfaces'
 import UsersTableRow from './UsersTableRow.vue'
-
-let usersList: Ref<null | User[]> = ref(null)
-
-onMounted(async () => {
-  usersList.value = (await getUsersList()) || null
-  console.log(usersList.value)
-})
+defineProps<{
+  usersList: User[]
+  filters: FilterParams | null
+}>()
 </script>
 
 <template>
@@ -21,12 +16,8 @@ onMounted(async () => {
       <th class="header">Role</th>
       <th class="header">Is blocked</th>
     </tr>
-    <template v-if="usersList">
-      <UsersTableRow v-for="user of usersList" :key="user.id" :user="user" />
-    </template>
+    <UsersTableRow v-for="user of usersList" :key="user.id" :user="user" />
   </table>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

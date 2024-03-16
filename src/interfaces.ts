@@ -1,5 +1,5 @@
-type Color = 'red' | 'yellow' | 'green' | 'blue' | 'white' | 'black' | 'orange' | 'brown'
-type Role = 'admin' | 'user' | 'root'
+export type Color = 'red' | 'yellow' | 'green' | 'blue' | 'white' | 'black' | 'orange' | 'brown'
+export type Role = 'admin' | 'user' | 'root'
 
 export interface User {
   id: number
@@ -12,11 +12,16 @@ export interface User {
 }
 
 export interface FilterParams {
-  color?: Color
+  color?: Color[]
   blocked?: boolean
-  role?: Role
+  role?: Role[]
   age?: {
     from: number
     to: number
   }
+}
+
+export interface AgeRange {
+  min: number
+  max: number
 }
