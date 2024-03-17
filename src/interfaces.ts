@@ -12,13 +12,10 @@ export interface User {
 }
 
 export interface FilterParams {
-  color?: Color[]
+  colors?: Color[]
   blocked?: boolean
-  role?: Role[]
-  age?: {
-    from: number
-    to: number
-  }
+  roles?: Role[]
+  age?: AgeRange
 }
 
 export interface AgeRange {

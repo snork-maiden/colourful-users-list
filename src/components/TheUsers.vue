@@ -25,11 +25,16 @@ const ageRange = computed((): AgeRange | undefined => {
     max: ages[ages.length - 1]
   }
 })
+
+function setFilters(filters: FilterParams) {
+  console.log(filters)
+  filterParams.value = filters
+}
 </script>
 
 <template>
   <template v-if="usersList && ageRange">
-    <UsersFilters :filters="filterParams" :age-range="ageRange" />
+    <UsersFilters :filters="filterParams" :age-range="ageRange" @filtersSubmit="setFilters" />
     <UsersTable :users-list="usersList" :filters="filterParams" />
   </template>
 </template>
