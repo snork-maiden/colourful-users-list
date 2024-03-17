@@ -26,7 +26,6 @@ function setFilters() {
   const fieldObjects = fieldData.map(([name, value]) => ({ name, value }))
   let filters: FilterParams = {}
 
-
   const colors: Color[] | undefined = fieldObjects
     .filter(({ name }) => name === 'color')
     .map(({ value }) => value as Color)
