@@ -87,7 +87,7 @@ function setFilters() {
     <UsersFiltersColors />
     <UsersFiltersRoles />
     <fieldset class="range">
-      <legend class="title">Is user blocked</legend>
+      <legend class="legend">Is user blocked</legend>
       <input type="checkbox" name="isBlocked" :value="1" id="user-is-blocked" class="block" />
       <label for="user-is-blocked">
         <IconLockedLock class="lock-icon" />
@@ -98,7 +98,7 @@ function setFilters() {
       </label>
     </fieldset>
     <UsersFiltersAge :age-range="ageRange" />
-    <button type="reset">Clear filters</button>
+    <button type="reset" @click="emit('filtersSubmit', null)">Clear filters</button>
     <button type="submit">Filter</button>
   </form>
 </template>
