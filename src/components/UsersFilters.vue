@@ -6,8 +6,7 @@ import { ref } from 'vue'
 import UsersFiltersColors from './UsersFiltersColors.vue'
 import UsersFiltersRoles from './UsersFiltersRoles.vue'
 import UsersFiltersAge from './UsersFiltersAge.vue'
-
-//write emit
+import UsersFiltersBlocked from './UsersFiltersBlocked.vue'
 
 const props = defineProps<{
   filters: FilterParams | null
@@ -86,21 +85,37 @@ function setFilters() {
     <h2 class="title">Filter users:</h2>
     <UsersFiltersColors />
     <UsersFiltersRoles />
-    <fieldset class="range">
-      <legend class="legend">Is user blocked</legend>
-      <input type="checkbox" name="isBlocked" :value="1" id="user-is-blocked" class="block" />
-      <label for="user-is-blocked">
-        <IconLockedLock class="lock-icon" />
-      </label>
-      <input type="checkbox" name="isBlocked" :value="0" id="user-is-not-blocked" class="block" />
-      <label for="user-is-not-blocked">
-        <IconUnlockedLock class="lock-icon" />
-      </label>
-    </fieldset>
+    <UsersFiltersBlocked />
     <UsersFiltersAge :age-range="ageRange" />
-    <button type="reset" @click="emit('filtersSubmit', null)">Clear filters</button>
-    <button type="submit">Filter</button>
+    <button class="btn reset" type="reset" @click="emit('filtersSubmit', null)">
+      Clear filters
+    </button>
+    <button class="btn submit" type="submit">Filter</button>
   </form>
 </template>
 
-<style scoped></style>
+<style scoped>
+.btn {
+  margin-top: 1em;
+  margin-right: 2em;
+  font: inherit;
+  font-size: 1.1em;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  line-height: 2;
+  padding: 0 0.5em;
+  border: 1px solid white;
+}
+
+.btn:hover, .btn:active {
+  transform: scale(1.05);
+}
+
+.reset {
+  background-color: var(--reset-button-bg);
+}
+.submit {
+  background-color: var(--submit-button-bg);
+}
+</style>

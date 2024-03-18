@@ -4,6 +4,12 @@
 
   --table-bg: #1c2331;
   --table-border-color: #394867;
+
+  --checked-checkbox-shadow: 0px 0px 5px 2px rgb(176, 187, 250);
+  
+  --reset-button-bg: #802e2b;
+
+  --submit-button-bg:#283892; 
 }
 
 *,
