@@ -11,13 +11,30 @@ let filteredUsersList: Ref<null | User[]> = ref(null)
 
 onMounted(async () => {
   usersList.value = (await getUsersList()) || null
-  const urlParams = new URLSearchParams(window.location.search)
-  let params = Object.fromEntries(urlParams)
-  if (!Object.keys(params).length) {
+  const urlParams = Object.fromEntries(new URLSearchParams(window.location.search))
+
+  let params: any = {}
+  if (!Object.keys(urlParams).length) {
     filterParams.value = null
-  } else {
-    filterParams.value = params
+    setFilteredList(filterParams.value)
+    return
   }
+
+  Object.entries(urlParams).forEach(([name, value]) => {
+    if (name === 'roles' || name === 'colors') {
+      params[name] = value.split(',')
+    } else if (name === 'age') {
+      const minMaxAges = value.split('-')
+      params.age = {
+        min: minMaxAges[0],
+        max: minMaxAges[1]
+      }
+    } else if (name === 'blocked') {
+      value === 'true' ? (params.blocked = true) : (params.blocked = false)
+    }
+  })
+  console.log(params)
+  filterParams.value = params as FilterParams
 
   setFilteredList(filterParams.value)
 })
@@ -33,9 +50,9 @@ const ageRange = computed((): AgeRange | undefined => {
 })
 
 function setFilters(filters: FilterParams | null) {
-  console.log(filters)
   filterParams.value = filters
   setFilteredList(filters)
+  setURLSearchParams(filters)
 }
 
 function setFilteredList(filters: FilterParams | null) {
@@ -47,7 +64,6 @@ function setFilteredList(filters: FilterParams | null) {
   Object.entries(filters).forEach(([key, value]) => {
     if (Array.isArray(value)) {
       if (key === 'colors') {
-        console.log(1)
         filterByColor(value)
         return
       }
@@ -72,10 +88,7 @@ function setFilteredList(filters: FilterParams | null) {
   })
 
   function filterUsers(key: keyof User, value: any): User[] {
-    console.log(3)
-
     if (!(key in usersList.value![0])) return []
-    console.log(4)
 
     return filteredUsersList.value!.filter((user) => user[key] === value)
   }
@@ -88,8 +101,6 @@ function setFilteredList(filters: FilterParams | null) {
       if (!users.length) return
       filtered.push(...users)
     })
-
-    console.log(2, filtered)
 
     filteredUsersList.value = filtered
   }
@@ -105,7 +116,26 @@ function setFilteredList(filters: FilterParams | null) {
   }
 }
 
-// function setURLSearchParams(filters: FilterParams | null) {}
+function setURLSearchParams(filters: FilterParams | null) {
+  if (!filters) {
+    window.history.pushState({}, '', '/')
+    return
+  }
+  let searchParams = new URLSearchParams()
+  Object.entries(filters).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      searchParams.append(key, value.join(','))
+      return
+    }
+    if (key === 'age') {
+      searchParams.append('age', value.min + '-' + value.max)
+      return
+    }
+    searchParams.append(key, value)
+  })
+  console.log(2, searchParams.toString())
+  history.replaceState(null, '', '?' + searchParams.toString())
+}
 </script>
 
 <template>

@@ -1,15 +1,21 @@
 <script setup lang="ts">
 import type { Color } from '@/interfaces'
 import UsersFiltersColorsItem from './UsersFiltersColorsItem.vue'
-
+ defineProps<{
+  colorFilter: Color[] | null
+}>()
 const colors: Color[] = ['red', 'yellow', 'green', 'blue', 'white', 'black', 'orange', 'brown']
 </script>
 <template>
   <fieldset class="colors">
     <legend class="legend">User color</legend>
     <div class="wrapper">
-      <UsersFiltersColorsItem v-for="color of colors" :key="color" :color="color">
-      </UsersFiltersColorsItem>
+      <UsersFiltersColorsItem
+        v-for="color of colors"
+        :key="color"
+        :color="color"
+        :checked="!!colorFilter?.includes(color)"
+      />
     </div>
   </fieldset>
 </template>

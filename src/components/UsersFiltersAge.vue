@@ -1,13 +1,33 @@
 <script setup lang="ts">
 import type { AgeRange } from '@/interfaces'
-import { computed, ref, type ComputedRef, type Ref } from 'vue'
+import { computed, ref, type ComputedRef, type Ref, onMounted, watch } from 'vue'
 
 const props = defineProps<{
   ageRange: AgeRange
+  ageFilter: AgeRange | null
 }>()
 
 let minAge: Ref<null | string> = ref(null)
 let maxAge: Ref<null | string> = ref(null)
+
+onMounted(()=> {
+  console.log(props.ageFilter)
+  setAgeValues(props.ageFilter)
+})
+
+watch(
+  () => props.ageFilter,
+  (ageFilter) => {
+    console.log(props.ageFilter)
+    setAgeValues(ageFilter)
+  }
+)
+
+function setAgeValues(ageFilter: AgeRange | null) {
+  if (!ageFilter) return
+    minAge.value = ageFilter?.min + '' || minAge.value
+    maxAge.value = ageFilter?.max + '' || maxAge.value
+}
 
 let minInMaxAge: ComputedRef<number> = computed(() => {
   if (!minAge.value) return props.ageRange.min
@@ -50,7 +70,6 @@ let maxInMinAge: ComputedRef<number> = computed(() => {
 </template>
 
 <style scoped>
-
 .wrapper {
   padding: 0.3em;
 }
@@ -61,6 +80,7 @@ let maxInMinAge: ComputedRef<number> = computed(() => {
 
 .input {
   font: inherit;
+  font-weight: 400;
 }
 
 .input:not(:last-child) {

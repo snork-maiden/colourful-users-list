@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import type { AgeRange, FilterParams, Color, Role } from '@/interfaces'
-import IconLockedLock from './icons/IconLockedLock.vue'
-import IconUnlockedLock from './icons/IconUnlockedLock.vue'
 import { ref } from 'vue'
 import UsersFiltersColors from './UsersFiltersColors.vue'
 import UsersFiltersRoles from './UsersFiltersRoles.vue'
@@ -83,10 +81,10 @@ function setFilters() {
 <template>
   <form class="filters" @submit.prevent="setFilters" ref="filtersForm">
     <h2 class="title">Filter users:</h2>
-    <UsersFiltersColors />
-    <UsersFiltersRoles />
-    <UsersFiltersBlocked />
-    <UsersFiltersAge :age-range="ageRange" />
+    <UsersFiltersColors :color-filter="filters?.colors || null" />
+    <UsersFiltersRoles :role-filter="filters?.roles || null" />
+    <UsersFiltersBlocked :blocked-filter="filters?.blocked || null" />
+    <UsersFiltersAge :age-range="ageRange" :age-filter="filters?.age || null" />
     <button class="btn reset" type="reset" @click="emit('filtersSubmit', null)">
       Clear filters
     </button>
@@ -108,7 +106,8 @@ function setFilters() {
   border: 1px solid white;
 }
 
-.btn:hover, .btn:active {
+.btn:hover,
+.btn:active {
   transform: scale(1.05);
 }
 

@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { Role } from '@/interfaces'
 
+defineProps<{
+  roleFilter: Role[] | null
+}>()
 const roles: Role[] = ['admin', 'user', 'root']
 </script>
 <template>
@@ -8,7 +11,14 @@ const roles: Role[] = ['admin', 'user', 'root']
     <legend class="legend">User role</legend>
     <div class="wrapper">
       <template v-for="role of roles" :key="role">
-        <input type="checkbox" :value="role" name="role" :id="'role-' + role" class="role-input" />
+        <input
+          type="checkbox"
+          :value="role"
+          name="role"
+          :id="'role-' + role"
+          class="role-input"
+          :checked="!!roleFilter?.includes(role)"
+        />
         <label :for="'role-' + role" class="role">{{ role }}</label>
       </template>
     </div>

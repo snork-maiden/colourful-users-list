@@ -3,10 +3,18 @@ import type { Color } from '@/interfaces'
 
 defineProps<{
   color: Color
+  checked: boolean
 }>()
 </script>
 <template>
-  <input type="checkbox" name="color" :value="color" :id="'pick-' + color" class="color-input" />
+  <input
+    type="checkbox"
+    name="color"
+    :value="color"
+    :id="'pick-' + color"
+    class="color-input"
+    :checked="checked"
+  />
   <label :for="'pick-' + color" class="color"
     ><span class="visually-hidden">
       {{ color }}
