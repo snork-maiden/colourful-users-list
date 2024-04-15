@@ -30,7 +30,7 @@ onMounted(async () => {
         max: minMaxAges[1]
       }
     } else if (name === 'blocked') {
-      value === 'true' ? (params.blocked = true) : (params.blocked = false)
+      params.blocked = value === 'true'
     }
   })
   console.log(params)
@@ -141,10 +141,25 @@ function setURLSearchParams(filters: FilterParams | null) {
 <template>
   <template v-if="filteredUsersList && ageRange">
     <UsersFilters :filters="filterParams" :age-range="ageRange" @filtersSubmit="setFilters" />
-    <template v-if="filteredUsersList.length">
-      <UsersTable :users-list="filteredUsersList" />
-      <template />
-    </template>
+    <UsersTable :users-list="filteredUsersList" v-if="filteredUsersList.length" />
   </template>
-  <div v-if="!filteredUsersList?.length" class="not-found">No users match your filter</div>
+  <Transition name="error">
+    <div v-if="!filteredUsersList?.length" class="not-found">No users match your filter :(</div>
+  </Transition>
 </template>
+<style scoped>
+.error-enter-active {
+  transition: transform 0.4s;
+}
+
+.error-enter-from,
+.error-leave-to {
+  transform: scale(0)
+}
+
+.not-found {
+  margin: auto;
+  font-weight: bold;
+}
+</style>
+//small animations. remove comments, check and pxs

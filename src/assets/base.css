@@ -5,11 +5,11 @@
   --table-bg: #1c2331;
   --table-border-color: #394867;
 
-  --checked-checkbox-shadow: 0px 0px 5px 2px rgb(176, 187, 250);
-  
-  --reset-button-bg: #802e2b;
+  --checked-checkbox-shadow: 0px 0px 5px 3px rgb(176, 187, 250);
 
-  --submit-button-bg:#283892; 
+  --reset-button-bg: #3f3d3d;
+
+  --submit-button-bg: #283892;
 }
 
 *,
@@ -22,7 +22,6 @@
 
 body {
   display: grid;
-  place-items: center;
   min-height: 100vh;
   color: var(--color-text);
   background: var(--color-background);
@@ -43,7 +42,7 @@ body {
     'Droid Sans',
     'Helvetica Neue',
     sans-serif;
-  font-size: 18px;
+  font-size: 20px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

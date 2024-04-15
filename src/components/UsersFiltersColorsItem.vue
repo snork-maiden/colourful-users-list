@@ -33,17 +33,21 @@ defineProps<{
 
 .color {
   display: block;
-  width: 30px;
-  height: 30px;
+  width: 1.8em;
+  aspect-ratio: 1/1;
   background-color: v-bind('color');
   border: 1px solid #858383;
   cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.color:hover {
+  transform: scale(1.1);
 }
 
 @media screen and (hover: hover) {
   .color {
-    width: 25px;
-    height: 25px;
+    width: 1.5em;
   }
 }
 </style>

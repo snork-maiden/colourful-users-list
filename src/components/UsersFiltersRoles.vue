@@ -19,7 +19,7 @@ const roles: Role[] = ['admin', 'user', 'root']
           class="role-input"
           :checked="!!roleFilter?.includes(role)"
         />
-        <label :for="'role-' + role" class="role">{{ role }}</label>
+        <label :for="'role-' + role" class="role rounded-btn">{{ role }}</label>
       </template>
     </div>
   </fieldset>
@@ -45,8 +45,5 @@ const roles: Role[] = ['admin', 'user', 'root']
   display: grid;
   place-items: center;
   min-width: 4em;
-  border: 2px solid white;
-  border-radius: 7px;
-  cursor: pointer;
 }
 </style>

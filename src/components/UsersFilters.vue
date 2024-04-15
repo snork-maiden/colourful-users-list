@@ -83,7 +83,7 @@ function setFilters() {
     <h2 class="title">Filter users:</h2>
     <UsersFiltersColors :color-filter="filters?.colors || null" />
     <UsersFiltersRoles :role-filter="filters?.roles || null" />
-    <UsersFiltersBlocked :blocked-filter="filters?.blocked || null" />
+    <UsersFiltersBlocked :blocked-filter="filters?.blocked ?? null" />
     <UsersFiltersAge :age-range="ageRange" :age-filter="filters?.age || null" />
     <button class="btn reset" type="reset" @click="emit('filtersSubmit', null)">
       Clear filters
@@ -116,5 +116,16 @@ function setFilters() {
 }
 .submit {
   background-color: var(--submit-button-bg);
+}
+
+:deep(.rounded-btn) {
+  border: 2px solid white;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+:deep(.rounded-btn:hover) {
+  transform: scale(1.05);
+
 }
 </style>

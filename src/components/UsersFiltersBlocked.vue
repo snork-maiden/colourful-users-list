@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
 import IconLockedLock from './icons/IconLockedLock.vue'
 import IconUnlockedLock from './icons/IconUnlockedLock.vue'
-let props = defineProps<{
+defineProps<{
   blockedFilter: boolean | null
 }>()
-
-let isBlockedChosen: Ref<boolean> = ref(!!props.blockedFilter)
-let isNotBlockedChosen: Ref<boolean> = ref(!props.blockedFilter)
 </script>
 <template>
   <fieldset class="range">
@@ -19,9 +15,9 @@ let isNotBlockedChosen: Ref<boolean> = ref(!props.blockedFilter)
         :value="1"
         id="user-is-blocked"
         class="blocked-input"
-        :checked="isBlockedChosen"
+        :checked="blockedFilter === true"
       />
-      <label for="user-is-blocked">
+      <label for="user-is-blocked" class="lock rounded-btn">
         <IconLockedLock class="lock-icon" />
       </label>
       <input
@@ -30,9 +26,9 @@ let isNotBlockedChosen: Ref<boolean> = ref(!props.blockedFilter)
         :value="0"
         id="user-is-not-blocked"
         class="blocked-input"
-        :checked="isNotBlockedChosen"
+        :checked="blockedFilter === false"
       />
-      <label for="user-is-not-blocked">
+      <label for="user-is-not-blocked" class="lock rounded-btn">
         <IconUnlockedLock class="lock-icon" />
       </label>
     </div>
@@ -48,14 +44,17 @@ let isNotBlockedChosen: Ref<boolean> = ref(!props.blockedFilter)
   display: none;
 }
 
-.blocked-input:checked + label .lock-icon {
+.blocked-input:checked + .lock .lock-icon {
   box-shadow: var(--checked-checkbox-shadow);
 }
+
+.lock {
+  display: grid;
+}
+
 .lock-icon {
-  width: 45px;
+  width: 2.3em;
   padding: 0.3em;
   height: fit-content;
-  border: 2px solid white;
-  border-radius: 7px;
 }
 </style>
